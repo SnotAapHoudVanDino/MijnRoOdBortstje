@@ -154,3 +154,89 @@ function laadDagboek() {
     document.getElementById('dagboekEntries').innerHTML = html;
   });
 }
+function uploadFoto(categorie, event) {
+  const fileInput = document.getElementById("fileUpload");
+  const files = fileInput.files;
+
+  if (files.length === 0) {
+    alert("Selecteer eerst een foto.");
+    return;
+  }
+
+  // Firebase Storage referentie
+  const storageRef = firebase.storage().ref();
+
+  // Loop door alle geselecteerde foto's en upload ze
+  Array.from(files).forEach(file => {
+    const fileRef = storageRef.child(`${categorie}/${event}/${file.name}`);
+    
+    // Upload foto
+    fileRef.put(file).then(snapshot => {
+      console.log(`Foto ${file.name} is geüpload!`);
+      // Na het uploaden kunnen we de foto ophalen en weergeven in de galerij
+      loadFotos(categorie, event); // Herlaad de foto's na upload
+    }).catch(error => {
+      console.error("Fout bij het uploaden van foto:", error);
+      alert("Er is een fout opgetreden bij het uploaden van de foto.");
+    });
+  });
+}
+function loadFotos(categorie, event) {
+  const storageRef = firebase.storage().ref();
+  const fotosRef = storageRef.child(`${categorie}/${event}`);
+  
+  // Haal alle foto's op die geüpload zijn naar de geselecteerde categorie en event
+  fotosRef.listAll().then(result => {
+    let html = '';
+    
+    result.items.forEach(imageRef => {
+      // Genereer een URL voor de foto en voeg deze toe aan de HTML
+      imageRef.getDownloadURL().then(url => {
+        html += `<img src="${url}" alt="${imageRef.name}" class="foto">`;
+        document.getElementById("fotoGalerij").innerHTML = html;
+      });
+    });
+  }).catch(error => {
+    console.error("Fout bij het ophalen van foto's:", error);
+    alert("Er is een fout opgetreden bij het ophalen van de foto's.");
+  });
+}
+function opslaanDagboek() {
+  const tekst = document.getElementById("dagboekInput").value;
+  const datum = new Date().toLocaleString();
+
+  if (tekst.trim() === "") {
+    alert("Het bericht mag niet leeg zijn.");
+    return;
+  }
+
+  // Firebase Firestore referentie
+  const dagboekRef = firebase.firestore().collection("dagboek");
+
+  // Voeg bericht toe aan Firestore
+  dagboekRef.add({
+    tekst: tekst,
+    datum: datum
+  }).then(() => {
+    console.log("Dagboekbericht opgeslagen!");
+    laadDagboek(); // Laad opnieuw alle berichten
+  }).catch(error => {
+    console.error("Fout bij het opslaan van het bericht:", error);
+    alert("Er is een fout opgetreden bij het opslaan van het bericht.");
+  });
+}
+function laadDagboek() {
+  const dagboekRef = firebase.firestore().collection("dagboek");
+
+  dagboekRef.orderBy("datum", "desc").get().then(querySnapshot => {
+    let html = '';
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      html += `<div><strong>${data.datum}</strong>: ${data.tekst}</div><hr>`;
+    });
+    document.getElementById("dagboekEntries").innerHTML = html;
+  }).catch(error => {
+    console.error("Fout bij het ophalen van berichten:", error);
+    alert("Er is een fout opgetreden bij het ophalen van berichten.");
+  });
+}
