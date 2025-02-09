@@ -1,16 +1,26 @@
-// Firebase-configuratie (voeg jouw Firebase gegevens hier in)
-const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-auth-domain",
-  projectId: "your-project-id",
-  storageBucket: "your-storage-bucket",
-  messagingSenderId: "your-sender-id",
-  appId: "your-app-id",
-};
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(app);
-const storage = firebase.storage(app);
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAmBFtPf11eu4tohfj17CMkG8FbsVl93O8",
+    authDomain: "mijnroodborststje.firebaseapp.com",
+    projectId: "mijnroodborststje",
+    storageBucket: "mijnroodborststje.firebasestorage.app",
+    messagingSenderId: "99812857188",
+    appId: "1:99812857188:web:f7b3dd2662dd70bca59671",
+    measurementId: "G-V1HHCF8Y93"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 document.addEventListener("DOMContentLoaded", function () {
   alert("Ik hou van jou Robin ❤️");
