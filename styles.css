@@ -1,0 +1,81 @@
+/* Algemeen styling voor het hele lichaam */
+body {
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  background: linear-gradient(to bottom, #8B0000, #FF6347);
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+  background-image: url('images/roodborstje-kraai.png');
+  background-position: top right;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  font-size: 40px;
+  color: #FFD700;
+  text-shadow: 2px 2px 8px black;
+}
+
+nav {
+  margin: 20px 0;
+}
+
+button {
+  background-color: #B22222;
+  color: white;
+  border: 2px solid #FFD700;
+  padding: 12px 24px;
+  margin: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+button:hover {
+  background-color: #FF4500;
+}
+
+#content {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+
+textarea {
+  width: 80%;
+  max-width: 500px;
+  height: 100px;
+  padding: 10px;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  background-color: #fff;
+  color: #8B0000;
+}
+
+.foto-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.foto-container img {
+  margin: 10px;
+  max-width: 150px;
+  height: auto;
+  border: 3px solid #FFD700;
+  border-radius: 10px;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+}
